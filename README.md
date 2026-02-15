@@ -1,4 +1,4 @@
-# Unitree G1 Web Controller (dev-4.0)
+# Unitree G1 Web Controller
 Web-based high-level control interface for the Unitree G1 robotic arms.
 
 ## Dependencies
