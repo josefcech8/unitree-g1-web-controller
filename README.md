@@ -31,4 +31,4 @@ pip install -r requirements.txt
 ```bash
 python unitree_control_server.py
 ```
-2. Open templates/index.html in your browser.
+2. Open [templates/index.html](./templates/index.html) in your browser.
