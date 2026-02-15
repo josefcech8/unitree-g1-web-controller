@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unitree G1 Controller</title>
+</head>
+    <body>
+
+        <h2>Unitree G1 Controller</h2>
+
+        <p>
+            <label for="robot_status"><strong>Robot Status: </strong></label>
+            <input type="text" id="robot_status" value="Idle" disabled
+                   style="background-color: lightgray; color: black; text-align: center;">
+        </p>
+
+        <button onclick="sendAction('shake hand')">Shake Hand</button>
+        <button onclick="sendAction('high five')">High Five</button>
+        <button onclick="sendAction('hug')">Hug</button>
+        <button onclick="sendAction('high wave')">High Wave</button>
+        <button onclick="sendAction('clap')">Clap</button>
+
+
+        <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+        <script>
+            const socket = io("http://localhost:5000");
+            const robot_status = document.getElementById("robot_status");
+            const buttons = document.querySelectorAll("button");
+
+            function setButtonsEnabled(enabled) {
+                buttons.forEach(btn => btn.disabled = !enabled);
+            }
+
+            function sendAction(name) {
+                socket.emit("arm_action", { action: name });
+            }
+
+            socket.on("action_response", data => {
+                console.log("Response:", data);
+
+                if(data.status === "running") {
+                    setButtonsEnabled(false);
+                    robot_status.value = `running -> ${data["action"]}`;
+                    robot_status.style = "background-color: lightgreen; color: black; text-align: center;"
+                } else if(data.status === "finished") {
+                    setButtonsEnabled(true);
+                    robot_status.value = `idle`;
+                    robot_status.style = "background-color: lightgray; color: black; text-align: center;"
+                } else {
+                    setButtonsEnabled(true);
+                    robot_status.value = `error -> ${data.message}`;
+                    robot_status.style = "background-color: red; color: black; text-align: center;"
+                }
+            });
+        </script>
+
+    </body>
+</html>
