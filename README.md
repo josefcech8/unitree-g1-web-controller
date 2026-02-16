@@ -12,25 +12,25 @@ Web-based high-level control interface for the Unitree G1 robotic arms.
 
 ## Installation
 1. Clone the repository:
-```bash
-git clone https://github.com/josefcech8/unitree-g1-web-controller.git
-cd unitree-g1-web-controller
-```
+    ```bash
+    git clone https://github.com/josefcech8/unitree-g1-web-controller.git
+    cd unitree-g1-web-controller
+    ```
 2. Create and activate a Python virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate  # Linux/macOS
-```
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # Linux/macOS
+    ```
 3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 ## Usage
 1. Run the server:
-```bash
-python3 unitree_control_server.py <networkInterface>
-```
-Replace `<networkInterface>` with the name of the network interface to which the robot is connected, or use `lo` for local loopback.
+    ```bash
+    python3 unitree_control_server.py <networkInterface>
+    ```
+    Replace `<networkInterface>` with the name of the network interface to which the robot is connected, or use `lo` for local loopback.
 
 2. Open [templates/index.html](./templates/index.html) in your browser.
