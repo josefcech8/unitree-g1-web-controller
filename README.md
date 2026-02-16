@@ -29,6 +29,6 @@ pip install -r requirements.txt
 ## Usage
 1. Run the server:
 ```bash
-python3 unitree_control_server.py networkInterface
+python3 unitree_control_server.py <networkInterface>
 ```
 2. Open [templates/index.html](./templates/index.html) in your browser.
