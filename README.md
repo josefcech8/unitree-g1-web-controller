@@ -31,4 +31,6 @@ pip install -r requirements.txt
 ```bash
 python3 unitree_control_server.py <networkInterface>
 ```
+Replace `<networkInterface>` with the name of the network interface to which the robot is connected, or use `lo` for local loopback.
+
 2. Open [templates/index.html](./templates/index.html) in your browser.
