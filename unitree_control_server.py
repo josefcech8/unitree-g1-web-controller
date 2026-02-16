@@ -1,22 +1,33 @@
+import sys
+import logging
 from flask import Flask
 from flask_socketio import SocketIO, emit
 from unitree_sdk2py.core.channel import ChannelFactoryInitialize
 from unitree_sdk2py.g1.arm.g1_arm_action_client import G1ArmActionClient, action_map
 
 
-INTERFACE = "lo" 
+# INTERFACE = "lo" 
 TIMEOUT = 5.0
+arm_client = None
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-ChannelFactoryInitialize(0, INTERFACE)
-arm_client = G1ArmActionClient()
-arm_client.Init()
-arm_client.SetTimeout(TIMEOUT)
+
+def init_unitree_sdk(interface):
+    global arm_client
+
+    ChannelFactoryInitialize(0, interface)
+
+    arm_client = G1ArmActionClient()
+    arm_client.Init()
+    arm_client.SetTimeout(TIMEOUT)
 
 
 def run_arm_action(action_name):
+    if arm_client is None:
+        raise RuntimeError("Unitree SDK not initialized")
+    
     release_needed = [
             "shake hand", "high five", "hug",
             "heart", "right heart", "hands up",
@@ -55,7 +66,12 @@ def handle_arm_action(json_data):
 
 
 if __name__ == "__main__":
-    import logging
+    if len(sys.argv) < 2:
+        print(f"Usage: python3 {sys.argv[0]} networkInterface")
+        sys.exit(-1)    
+
+    init_unitree_sdk(sys.argv[1])
+    
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
 
